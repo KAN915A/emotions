@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Na Bangaram</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, cornflowerblue 0%, purple 20%, black 40%, burgundy 60%, emeraldgreen 80%, navy 100%);
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      padding: 40px;
+      color: black;
+    }
+    .card {
+      background: rgba(255,255,255,0.6); backdrop-filter: blur(4px);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    button {
+      background: purple;
+      border: none;
+      padding: 12px 20px;
+      margin: 10px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+      color: white;
+    }
+    button:hover {
+      background: #ff5abb;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="introCard">
+    <h2 id="introText"></h2>
+  </div>
+
+  <div class="card" id="optionsCard" style="display:none;">
+    <h3>Bangaram, em feel avutunnav?</h3>
+    <button onclick="sendMsg('sad')">😔 Badha ga undi</button>
+    <button onclick="sendMsg('angry')">😡 Kopam vastundi</button>
+    <button onclick="sendMsg('anxiety')">😥 Tension ga undi</button>
+    <button onclick="sendMsg('lonely')">🥺 Alone ga undi</button>
+  </div>
+
+  <div class="card" id="resultCard" style="display:none;"></div>
+
+  <script>
+    // Typing effect intro text
+    const text = "Na bangaram… niku enti ayyindi?";
+    let index = 0;
+    function typeText() {
+      if (index < text.length) {
+        document.getElementById('introText').innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeText, 80);
+      } else {
+        setTimeout(() => {
+          document.getElementById('optionsCard').style.display = 'block';
+        }, 600);
+      }
+    }
+    typeText();
+
+    function sendMsg(feeling) {
+      const messages = {
+        sad: "Aa bujji badha ni na thone panchukuntanu. Nuvvu okkasari navvite, na prapancha mottam bright aipothundi bangaram ❤️",
+        angry: "Na thali, kopam vachina nenu ikkada ne untanu. Ninnu calm cheyyadaniki oka pedda hug kavala? 🤗💗",
+        anxiety: "Naa bujji, em worry avvakunda, nenu unnanu kada. Ninnu eppudu protect chesthanu 💕",
+        lonely: "Na bangaram evaru lonely kadhu… especially nuvvu. Nenu eppudu ninnu chusukuntane untanu 🫶"
+      };
+
+      document.getElementById('resultCard').innerHTML = `<h3>${messages[feeling]}</h3>`;
+      document.getElementById('resultCard').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
