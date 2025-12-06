@@ -1,90 +1,391 @@
 <!DOCTYPE html>
 <html lang="te">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Na Bangaram</title>
-  <style>
-    body {
-      background: linear-gradient(135deg, cornflowerblue 0%, purple 20%, black 40%, burgundy 60%, emeraldgreen 80%, navy 100%);
-      font-family: 'Poppins', sans-serif;
-      text-align: center;
-      padding: 40px;
-      color: black;
-    }
-    .card {
-      background: rgba(255,255,255,0.6); backdrop-filter: blur(4px);
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 400px;
-      margin: auto;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      animation: fadeIn 1s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    button {
-      background: purple;
-      border: none;
-      padding: 12px 20px;
-      margin: 10px;
-      border-radius: 30px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: 0.3s;
-      color: white;
-    }
-    button:hover {
-      background: #ff5abb;
-      transform: scale(1.05);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoshi.</title>
+    <style>
+        /* --- MATURE DESIGN SYSTEM --- */
+        :root {
+            --bg: #0a0a0a;
+            --text-main: #e0e0e0;
+            --text-muted: #666666;
+            --accent: #ffffff;
+            --border: #222222;
+            
+            --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-body: 'Georgia', serif; /* Serif adds maturity */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-display);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- LAYOUT --- */
+        .layout {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- SIDEBAR NAVIGATION --- */
+        .sidebar {
+            width: 250px;
+            padding: 60px 40px;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--accent);
+            margin-bottom: 60px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            text-align: left;
+            color: var(--text-muted);
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: color 0.4s ease;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            color: var(--accent);
+        }
+
+        .footer-date {
+            font-size: 0.7rem;
+            color: #333;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        .content {
+            flex: 1;
+            position: relative;
+            padding: 60px 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .page {
+            position: absolute;
+            top: 50%;
+            left: 80px;
+            right: 80px;
+            transform: translateY(-50%);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%);
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+
+        p {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        /* --- PROJECT 1: BANGARAM (Mood) --- */
+        .mood-list {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .mood-item {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mood-item:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .response-text {
+            margin-top: 30px;
+            font-family: var(--font-body);
+            font-style: italic;
+            color: var(--accent);
+            border-left: 1px solid var(--border);
+            padding-left: 20px;
+        }
+
+        /* --- PROJECT 2: MUSE (Poems) --- */
+        .poem-selector {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            width: fit-content;
+        }
+
+        .poem-trigger {
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .poem-trigger:hover { color: var(--accent); }
+
+        .poem-content {
+            font-family: var(--font-body);
+            font-size: 1.5rem;
+            color: var(--text-main);
+            min-height: 100px;
+        }
+
+        /* --- PROJECT 3: ADORE (Details) --- */
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .detail-item h3 {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .detail-item span {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* --- PROJECT 4: TRUTH --- */
+        .truth-statement {
+            font-size: 5vw;
+            line-height: 1;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .truth-sub {
+            margin-top: 20px;
+            font-family: var(--font-body);
+            font-style: italic;
+            color: #888;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .layout { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; padding: 20px; border-right: none; border-bottom: 1px solid var(--border); flex-direction: row; align-items: center; }
+            .nav-links { flex-direction: row; gap: 15px; }
+            .nav-btn { font-size: 0.7rem; }
+            .logo { margin-bottom: 0; margin-right: 20px; }
+            .content { padding: 40px 20px; align-items: flex-start; }
+            h1 { font-size: 2.5rem; }
+            .detail-grid { grid-template-columns: 1fr; gap: 20px; }
+            .footer-date { display: none; }
+        }
+    </style>
 </head>
 <body>
-  <div class="card" id="introCard">
-    <h2 id="introText"></h2>
-  </div>
 
-  <div class="card" id="optionsCard" style="display:none;">
-    <h3>Bangaram, em feel avutunnav?</h3>
-    <button onclick="sendMsg('sad')">😔 Badha ga undi</button>
-    <button onclick="sendMsg('angry')">😡 Kopam vastundi</button>
-    <button onclick="sendMsg('anxiety')">😥 Tension ga undi</button>
-    <button onclick="sendMsg('lonely')">🥺 Alone ga undi</button>
-  </div>
+    <div class="layout">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">HOSHI.</div>
+            <nav class="nav-links">
+                <button class="nav-btn active" onclick="switchPage('intro', this)">00. Intro</button>
+                <button class="nav-btn" onclick="switchPage('bangaram', this)">01. Bangaram</button>
+                <button class="nav-btn" onclick="switchPage('muse', this)">02. Muse</button>
+                <button class="nav-btn" onclick="switchPage('adore', this)">03. Details</button>
+                <button class="nav-btn" onclick="switchPage('truth', this)">04. Truth</button>
+            </nav>
+            <div class="footer-date">EST. 2025</div>
+        </aside>
 
-  <div class="card" id="resultCard" style="display:none;"></div>
+        <!-- CONTENT AREA -->
+        <main class="content">
+            
+            <!-- 00. INTRO -->
+            <section id="intro" class="page active">
+                <h1>Hoshita.</h1>
+                <p>A digital archive of my affection. Minimal, honest, and entirely yours.</p>
+                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">Select a chapter from the menu.</p>
+            </section>
 
-  <script>
-    // Typing effect intro text
-    const text = "Na bangaram… niku enti ayyindi?";
-    let index = 0;
-    function typeText() {
-      if (index < text.length) {
-        document.getElementById('introText').innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeText, 80);
-      } else {
-        setTimeout(() => {
-          document.getElementById('optionsCard').style.display = 'block';
-        }, 600);
-      }
-    }
-    typeText();
+            <!-- 01. BANGARAM (Mood) -->
+            <section id="bangaram" class="page">
+                <h1>State of Mind</h1>
+                <p>My Bangaram. How is your spirit today?</p>
+                
+                <div class="mood-list">
+                    <div class="mood-item" onclick="handleMood('sad')">Heavy</div>
+                    <div class="mood-item" onclick="handleMood('angry')">Fire</div>
+                    <div class="mood-item" onclick="handleMood('anxiety')">Noise</div>
+                    <div class="mood-item" onclick="handleMood('lonely')">Silence</div>
+                </div>
 
-    function sendMsg(feeling) {
-      const messages = {
-        sad: "Aa bujji badha ni na thone panchukuntanu. Nuvvu okkasari navvite, na prapancha mottam bright aipothundi bangaram ❤️",
-        angry: "Na thali, kopam vachina nenu ikkada ne untanu. Ninnu calm cheyyadaniki oka pedda hug kavala? 🤗💗",
-        anxiety: "Naa bujji, em worry avvakunda, nenu unnanu kada. Ninnu eppudu protect chesthanu 💕",
-        lonely: "Na bangaram evaru lonely kadhu… especially nuvvu. Nenu eppudu ninnu chusukuntane untanu 🫶"
-      };
+                <div id="mood-response" class="response-text" style="display: none;"></div>
+            </section>
 
-      document.getElementById('resultCard').innerHTML = `<h3>${messages[feeling]}</h3>`;
-      document.getElementById('resultCard').style.display = 'block';
-    }
-  </script>
+            <!-- 02. MUSE (Poems) -->
+            <section id="muse" class="page">
+                <h1>Muse</h1>
+                <div class="poem-selector">
+                    <span class="poem-trigger" onclick="renderPoem('eyes')">The Eyes</span>
+                    <span class="poem-trigger" onclick="renderPoem('lips')">The Lips</span>
+                    <span class="poem-trigger" onclick="renderPoem('existence')">The Being</span>
+                </div>
+                <div id="poem-display" class="poem-content">
+                    <!-- Poem appears here -->
+                    Select a subject above.
+                </div>
+            </section>
+
+            <!-- 03. ADORE (Why I Love Her) -->
+            <section id="adore" class="page">
+                <h1>The Details</h1>
+                <p>The components of perfection.</p>
+                
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <h3>Visuals</h3>
+                        <span>Your hair—silky chaos. Your face—art.</span>
+                    </div>
+                    <div class="detail-item">
+                        <h3>Essence</h3>
+                        <span>Funny. Intelligent. Lovely. A rare combination of soul.</span>
+                    </div>
+                    <div class="detail-item">
+                        <h3>Impact</h3>
+                        <span>You do not just exist; you improve the world around you.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 04. TRUTH -->
+            <section id="truth" class="page">
+                <div class="truth-statement">You are the<br>Prettiest.</div>
+                <div class="truth-sub">Do not shrink yourself. Do not shame yourself.<br>You are the standard.</div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // --- PAGE SWITCHING LOGIC ---
+        function switchPage(pageId, btnElement) {
+            // 1. Remove active class from all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            // 2. Add active class to target page
+            document.getElementById(pageId).classList.add('active');
+
+            // 3. Update Nav Buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            btnElement.classList.add('active');
+        }
+
+        // --- MOOD LOGIC (Bangaram) ---
+        function handleMood(mood) {
+            const responseBox = document.getElementById('mood-response');
+            let text = "";
+
+            if (mood === 'sad') {
+                text = "I am here to carry the weight. Smile once, and you light up my entire timeline.";
+            } else if (mood === 'angry') {
+                text = "Let the fire burn, I will stay. A hug is waiting to bring the calm.";
+            } else if (mood === 'anxiety') {
+                text = "Breathe. I am your shield. Nothing touches you while I am here.";
+            } else if (mood === 'lonely') {
+                text = "You are never alone. I am watching over you, always.";
+            }
+
+            responseBox.style.display = "block";
+            responseBox.innerText = text;
+            responseBox.style.opacity = 0;
+            
+            // Fade in effect
+            setTimeout(() => {
+                responseBox.style.opacity = 1;
+                responseBox.style.transition = "opacity 1s ease";
+            }, 50);
+        }
+
+        // --- POEM LOGIC (Muse) ---
+        function renderPoem(type) {
+            const display = document.getElementById('poem-display');
+            display.style.opacity = 0;
+
+            setTimeout(() => {
+                if (type === 'eyes') {
+                    display.innerHTML = "<i>The Green Eyes.</i><br><br>Emeralds have nothing on the depth I find when I look at you. A forest I never want to leave.";
+                } else if (type === 'lips') {
+                    display.innerHTML = "<i>The Lips.</i><br><br>When they speak, I listen. When they smile, I fall. The curve that defines my happiness.";
+                } else if (type === 'existence') {
+                    display.innerHTML = "<i>Hoshita.</i><br><br>The definition of my existence. Nuvvu lekapothe, nenu lenu.";
+                }
+                display.style.opacity = 1;
+                display.style.transition = "opacity 0.6s ease";
+            }, 300);
+        }
+    </script>
 </body>
 </html>
